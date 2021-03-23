@@ -32,8 +32,8 @@ func GetTodasMensagens(c *gin.Context) {
 		}
 		if msg.IdRemetente == int(IdSessao) {
 			fmt.Println(msg)
-			var msgs []models.Mensagens
-			banco.DBClient.Where("mensagens.id_remetente = ? OR mensagens.id_destinatario = ?", msg.IdRemetente, msg.IdRemetente).Find(&msgs)
+			var msgs []models.Msg
+			banco.DBClient.Raw("SELECT users.nome as usuario, mensagens.mensagem FROM users INNER JOIN mensagens ON users.id_usuario = mensagens.id_remetente WHERE mensagens.id_remetente = ? OR mensagens.id_destinatario = ?", msg.IdRemetente, msg.IdRemetente).Scan(&msgs)
 
 			c.JSON(http.StatusOK, msgs)
 		} else {

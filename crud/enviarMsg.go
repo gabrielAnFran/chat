@@ -12,6 +12,8 @@ import (
 )
 
 func EnviarMensagem(c *gin.Context) {
+	
+
 	fmt.Println("token", Token)
 	//caso o token seja vazio, quer dizer q o user nao está logado, logado nao tem autorização para fazer nada por aqui...
 	if Token != "" {
